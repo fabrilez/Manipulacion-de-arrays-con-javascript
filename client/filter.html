@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter</title>
+</head>
+<style>
+    .inactive {
+        display: none;
+    }
+</style>
+<body>
+    <form id="form">
+        <label for="search">
+            <input type="search" name="search" id="search">
+            <input type="button" value="Buscar" id="process">
+        </label>
+    </form>
+    <div id="app">
+        <h3>Ordenes</h3>
+    </div>
+    <div id="result">
+    </div>
+</body>
+<script>
+    const result = document.getElementById('result');
+    const app = document.getElementById('app');
+    const search = document.getElementById('search');
+    const process = document.getElementById('process');
+    const form = document.getElementById('form');
+
+    const orders = [
+        {
+            customerName: "Nicolas",
+            total: 60,
+            delivered: true
+        },
+        {
+            customerName: "Zulema",
+            total: 120,
+            delivered: false
+        },
+        {
+            customerName: "Santiago",
+            total: 180,
+            delivered: true
+        },
+        {
+            customerName: "Nicole",
+            total: 240,
+            delivered: true
+        },
+    ]; 
+    
+    const template = orders.forEach(item => {
+        app.innerHTML += 
+        ` 
+            <ul>
+                <li>Nombre: ${item.customerName}</li>
+                <li>Total a pagar: ${item.total}</li>
+                <li>Entregado: ${item.delivered === true ? "Si" : "Sin entregar"}</li> 
+            </ul>
+
+        `
+    });
+
+    const queryOfSearch = () => {
+        let val = search.value;
+        console.log(val)
+        return orders.filter(item => {
+            if (item.customerName.includes(val)) {
+                console.log(item.customerName.includes(val))
+                app.classList.add('inactive');
+                result.innerHTML += `
+                <ul>
+                    <li>Nombre: ${item.customerName}</li>
+                    <li>Total a pagar: ${item.total}</li>
+                    <li>Entregado: ${item.delivered === true ? "Si" : "Sin entregar"}</li> 
+                </ul>`;
+                console.log(result)
+            } else {
+                console.log("error")
+            }
+        })
+
+    }
+
+    process.addEventListener('click', queryOfSearch);
+
+</script>
+</html>
